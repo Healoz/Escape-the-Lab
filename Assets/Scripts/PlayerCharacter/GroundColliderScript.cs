@@ -20,7 +20,7 @@ public class GroundColliderScript : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             Debug.Log("Collided with ground");
-            playerScript.isJumping = false;
+            playerScript.isGrounded = true;
         }
     }
 }
