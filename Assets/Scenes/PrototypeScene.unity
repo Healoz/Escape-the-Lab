@@ -356,6 +356,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &756966061 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6407550071765966073, guid: ca5e2ef7aa75f5148bded223083d4b4e, type: 3}
+  m_PrefabInstance: {fileID: 1245988674561969625}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &989769022
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -490,6 +495,10 @@ PrefabInstance:
       propertyPath: groundCollider
       value: 
       objectReference: {fileID: 2002188288}
+    - target: {fileID: 7492822971489123957, guid: ca5e2ef7aa75f5148bded223083d4b4e, type: 3}
+      propertyPath: spriteRenderer
+      value: 
+      objectReference: {fileID: 756966061}
     - target: {fileID: 8047650382992647307, guid: ca5e2ef7aa75f5148bded223083d4b4e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
