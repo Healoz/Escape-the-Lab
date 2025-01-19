@@ -7,12 +7,8 @@ public class PlayerScript : MonoBehaviour
     public SpriteRenderer spriteRenderer;
 
     public float jumpStrength;
+    public float runStrength;
     public bool isGrounded = false;
-
-    public State airState;
-    public State groundState;
-
-    State state;
 
     void Start()
     {
@@ -27,17 +23,34 @@ public class PlayerScript : MonoBehaviour
             isGrounded = false;
             rigidBody.linearVelocityY = jumpStrength;
         }
+
+        if (Input.GetKey(KeyCode.D))
+        {
+            MoveHorizontal(true);
+        }
+
+        if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A))
+        {
+            rigidBody.linearVelocityX = 0;
+        }
+
+        if (Input.GetKey(KeyCode.A))
+        {
+            MoveHorizontal(false);
+        }
     }
 
-    void SelectState()
+    public void MoveHorizontal(bool isGoingRight)
     {
+        Debug.Log("function triggered");
+        float runForceValue = runStrength;
+        if (!isGoingRight)
+        {
+            // make negative if going left
+            runForceValue = runForceValue * -1;
+        }
 
+        rigidBody.linearVelocityX = runForceValue;
     }
-
-    void UpdateState()
-    {
-
-    }
-
 
 }

@@ -487,9 +487,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7592355543980604726, guid: ca5e2ef7aa75f5148bded223083d4b4e, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -7592355543980604726, guid: ca5e2ef7aa75f5148bded223083d4b4e, type: 3}
+      propertyPath: m_GravityScale
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3321831419954409839, guid: ca5e2ef7aa75f5148bded223083d4b4e, type: 3}
+      propertyPath: m_Size.y
+      value: 0.009920571
+      objectReference: {fileID: 0}
+    - target: {fileID: 3321831419954409839, guid: ca5e2ef7aa75f5148bded223083d4b4e, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.00003971439
+      objectReference: {fileID: 0}
     - target: {fileID: 4679592913842273399, guid: ca5e2ef7aa75f5148bded223083d4b4e, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7492822971489123957, guid: ca5e2ef7aa75f5148bded223083d4b4e, type: 3}
+      propertyPath: runStrength
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7492822971489123957, guid: ca5e2ef7aa75f5148bded223083d4b4e, type: 3}
+      propertyPath: jumpStrength
+      value: 7.5
       objectReference: {fileID: 0}
     - target: {fileID: 7492822971489123957, guid: ca5e2ef7aa75f5148bded223083d4b4e, type: 3}
       propertyPath: groundCollider
