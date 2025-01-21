@@ -2,10 +2,16 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
-    public Rigidbody2D rigidBody;
+    // State references
+    public State airState;
+    public State idleState;
+    public State runState;
+
+    public State state;
 
     public SpriteRenderer spriteRenderer;
 
+    public Rigidbody2D rigidBody;
     public float jumpStrength;
     public float runStrength;
     public bool isGrounded = false;
@@ -18,10 +24,27 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        CheckInput();
+
+        if (state.isComplete)
+        {
+            SelectState();
+        }
+
+        state.Do();
+
+    }
+
+    public void CheckInput()
+    {
+
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             isGrounded = false;
             rigidBody.linearVelocityY = jumpStrength;
+
+            // UpdateState();
         }
 
         if (Input.GetKey(KeyCode.D))
@@ -42,7 +65,6 @@ public class PlayerScript : MonoBehaviour
 
     public void MoveHorizontal(bool isGoingRight)
     {
-        Debug.Log("function triggered");
         float runForceValue = runStrength;
         if (!isGoingRight)
         {
@@ -51,6 +73,30 @@ public class PlayerScript : MonoBehaviour
         }
 
         rigidBody.linearVelocityX = runForceValue;
+    }
+
+    public void SelectState()
+    {
+
+        if (isGrounded)
+        {
+            if (rigidBody.linearVelocityX != 0)
+            {
+                state = runState;
+
+            }
+            else
+            {
+                state = idleState;
+
+            }
+        }
+        else
+        {
+            state = airState;
+        }
+
+        state.Enter();
     }
 
 }
