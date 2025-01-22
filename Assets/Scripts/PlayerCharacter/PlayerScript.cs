@@ -3,37 +3,89 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour
 {
     // State references
-    public State airState;
-    public State idleState;
-    public State runState;
+    public AirState airState;
+    public IdleState idleState;
+    public RunState runState;
 
     public State state;
 
     public SpriteRenderer spriteRenderer;
 
     public Rigidbody2D rigidBody;
-    public float jumpStrength;
-    public float runStrength;
-    public bool isGrounded = false;
+
+    public bool isGrounded;
+
+    // input
+    public float xInput;
+    public float yInput;
+
+    public Vector3 mousePosition;
+    public GameObject mouseReticle;
+    public GameObject forceDirection;
+
+    public float rotationSpeed = 1f;
+    public Transform rotateAround;
+
 
     void Start()
     {
+        idleState.Setup(rigidBody, spriteRenderer, this);
+        runState.Setup(rigidBody, spriteRenderer, this);
+        airState.Setup(rigidBody, spriteRenderer, this);
 
+        state = idleState;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKey(KeyCode.R))
+        {
+            forceDirection.transform.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
+        }
+
+        if (Input.GetKey(KeyCode.Q))
+        {
+            forceDirection.transform.Rotate(Vector3.forward, -rotationSpeed * Time.deltaTime);
+        }
+
+        if (Input.GetKey(KeyCode.T))
+        {
+            forceDirection.transform.RotateAround(transform.position, Vector3.forward, rotationSpeed * Time.deltaTime);
+        }
+
+        GetInputs();
 
         CheckInput();
 
-        if (state.isComplete)
-        {
-            SelectState();
-        }
+
+        SelectState();
+
 
         state.Do();
 
+    }
+
+    void GetInputs()
+    {
+        // getting button presses
+        xInput = Input.GetAxisRaw("Horizontal");
+        yInput = Input.GetAxisRaw("Vertical");
+
+        GetForceDirection();
+
+    }
+
+    void GetForceDirection()
+    {
+        // getting mouse position
+        mousePosition = Input.mousePosition;
+        mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+        // z value should be 0, not -10
+        mousePosition = new Vector3(mousePosition.x, mousePosition.y, 0);
+        mouseReticle.transform.position = mousePosition;
+
+        forceDirection.transform.position = transform.position;
     }
 
     public void CheckInput()
@@ -42,30 +94,43 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             isGrounded = false;
-            rigidBody.linearVelocityY = jumpStrength;
-
-            // UpdateState();
+            rigidBody.linearVelocityY = airState.jumpStrength;
         }
 
-        if (Input.GetKey(KeyCode.D))
+        if (xInput != 0)
         {
-            MoveHorizontal(true);
+            // moves left or right depending on neg or position xInput
+            MoveHorizontal(xInput > 0);
         }
-
-        if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.A))
+        else
         {
             rigidBody.linearVelocityX = 0;
         }
 
-        if (Input.GetKey(KeyCode.A))
+
+        if (yInput < 0) // Pressing S or Down arrow
         {
-            MoveHorizontal(false);
+            Scale(60f);
         }
+        else
+        {
+            Scale(120f);
+        }
+
+
+
+    }
+
+    public void Scale(float newScaleAmount)
+    {
+        Vector3 newScale = transform.localScale;
+        newScale.y = newScaleAmount;
+        transform.localScale = newScale;
     }
 
     public void MoveHorizontal(bool isGoingRight)
     {
-        float runForceValue = runStrength;
+        float runForceValue = runState.runSpeed;
         if (!isGoingRight)
         {
             // make negative if going left
@@ -77,10 +142,11 @@ public class PlayerScript : MonoBehaviour
 
     public void SelectState()
     {
+        State oldState = state;
 
         if (isGrounded)
         {
-            if (rigidBody.linearVelocityX != 0)
+            if (xInput != 0)
             {
                 state = runState;
 
@@ -96,7 +162,14 @@ public class PlayerScript : MonoBehaviour
             state = airState;
         }
 
-        state.Enter();
+        if (oldState != state || oldState.isComplete)
+        {
+            oldState.Exit();
+            state.Initialise();
+            state.Enter();
+        }
+
+
     }
 
 }

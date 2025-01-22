@@ -9,7 +9,7 @@ public class IdleState : State
     public override void Do()
     {
         // end condition
-        if (rigidBody.linearVelocityX != 0 || !isGrounded)
+        if (!input.isGrounded)
         {
             Debug.Log("idle done");
             isComplete = true;
