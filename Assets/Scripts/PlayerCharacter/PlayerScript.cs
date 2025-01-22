@@ -15,14 +15,13 @@ public class PlayerScript : MonoBehaviour
 
     public bool isGrounded;
 
+    public float forceEvadeAmount;
+
     // input
     public float xInput;
     public float yInput;
 
-
-
-    public float rotationSpeed = 1f;
-    public Transform rotateAround;
+    public ForceDirectionScript forceDirectionScript;
 
 
     void Start()
@@ -37,16 +36,10 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // if (Input.GetKey(KeyCode.R))
-        // {
-        //     forceDirection.transform.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
-        // }
-
 
         GetInputs();
 
         CheckInput();
-
 
         SelectState();
 
@@ -61,19 +54,15 @@ public class PlayerScript : MonoBehaviour
         xInput = Input.GetAxisRaw("Horizontal");
         yInput = Input.GetAxisRaw("Vertical");
 
-
-
     }
-
-
 
     public void CheckInput()
     {
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            isGrounded = false;
-            rigidBody.linearVelocityY = airState.jumpStrength;
+            Jump();
+
         }
 
         if (xInput != 0)
@@ -96,8 +85,18 @@ public class PlayerScript : MonoBehaviour
             Scale(120f);
         }
 
+        // Force evade on right mouse click
+        if (Input.GetMouseButtonDown(1))
+        {
+            ForceEvade();
+        }
 
+    }
 
+    public void Jump()
+    {
+        isGrounded = false;
+        rigidBody.linearVelocityY = airState.jumpStrength;
     }
 
     public void Scale(float newScaleAmount)
@@ -117,6 +116,12 @@ public class PlayerScript : MonoBehaviour
         }
 
         rigidBody.linearVelocityX = runForceValue;
+    }
+
+    public void ForceEvade()
+    {
+        Debug.Log(forceDirectionScript.direction.normalized);
+        rigidBody.AddForce(forceDirectionScript.direction * -forceEvadeAmount, ForceMode2D.Impulse);
     }
 
     public void SelectState()

@@ -12,8 +12,7 @@ public class ForceDirectionScript : MonoBehaviour
 
     public Vector2 playerPosition;
 
-
-
+    public Vector2 direction;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -49,7 +48,7 @@ public class ForceDirectionScript : MonoBehaviour
         Vector3 screenPlayerPosition = Camera.main.WorldToScreenPoint(player.transform.position);
 
         // get direction in screen space
-        Vector2 direction = (mousePosition - screenPlayerPosition).normalized;
+        direction = (mousePosition - screenPlayerPosition).normalized;
 
         // calculate arrow position from player
         Vector2 arrowPosition = (Vector2)screenPlayerPosition + (direction * arrowDistanceFromPlayer);
