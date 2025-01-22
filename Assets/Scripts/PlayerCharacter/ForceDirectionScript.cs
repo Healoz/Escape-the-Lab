@@ -5,7 +5,14 @@ public class ForceDirectionScript : MonoBehaviour
 {
     public Vector3 mousePosition;
     public Image mouseReticle;
-    public GameObject forceDirectionArrow;
+    public Image forceDirectionArrow;
+    public GameObject player;
+
+    public float arrowDistanceFromPlayer;
+
+    public Vector2 playerPosition;
+
+
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -24,14 +31,33 @@ public class ForceDirectionScript : MonoBehaviour
     {
         // getting mouse position
         mousePosition = Input.mousePosition;
-        mouseReticle.rectTransform.position = mousePosition;
+        mouseReticle.rectTransform.position = mousePosition; // moving mouseReticle
 
+        DrawLineFromPlayerToMouse();
 
-        // mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-        // // z value should be 0, not -10
-        // mousePosition = new Vector3(mousePosition.x, mousePosition.y, 0);
-        // mouseReticle.transform.position = mousePosition;
+    }
 
-        forceDirectionArrow.transform.position = transform.position;
+    void DrawLineFromPlayerToMouse()
+    {
+
+        Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(new Vector3(
+            mousePosition.x,
+            mousePosition.y,
+            -Camera.main.transform.position.z
+        ));
+
+        Vector3 screenPlayerPosition = Camera.main.WorldToScreenPoint(player.transform.position);
+
+        // get direction in screen space
+        Vector2 direction = (mousePosition - screenPlayerPosition).normalized;
+
+        // calculate arrow position from player
+        Vector2 arrowPosition = (Vector2)screenPlayerPosition + (direction * arrowDistanceFromPlayer);
+        forceDirectionArrow.rectTransform.position = arrowPosition;
+
+        playerPosition = player.transform.position;
+
+        // drawing line between 2 points
+        Debug.DrawLine(playerPosition, worldMousePosition, Color.red);
     }
 }
