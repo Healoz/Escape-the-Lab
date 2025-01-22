@@ -19,9 +19,7 @@ public class PlayerScript : MonoBehaviour
     public float xInput;
     public float yInput;
 
-    public Vector3 mousePosition;
-    public GameObject mouseReticle;
-    public GameObject forceDirection;
+
 
     public float rotationSpeed = 1f;
     public Transform rotateAround;
@@ -39,20 +37,11 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.R))
-        {
-            forceDirection.transform.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
-        }
+        // if (Input.GetKey(KeyCode.R))
+        // {
+        //     forceDirection.transform.Rotate(Vector3.forward, rotationSpeed * Time.deltaTime);
+        // }
 
-        if (Input.GetKey(KeyCode.Q))
-        {
-            forceDirection.transform.Rotate(Vector3.forward, -rotationSpeed * Time.deltaTime);
-        }
-
-        if (Input.GetKey(KeyCode.T))
-        {
-            forceDirection.transform.RotateAround(transform.position, Vector3.forward, rotationSpeed * Time.deltaTime);
-        }
 
         GetInputs();
 
@@ -72,21 +61,11 @@ public class PlayerScript : MonoBehaviour
         xInput = Input.GetAxisRaw("Horizontal");
         yInput = Input.GetAxisRaw("Vertical");
 
-        GetForceDirection();
+
 
     }
 
-    void GetForceDirection()
-    {
-        // getting mouse position
-        mousePosition = Input.mousePosition;
-        mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-        // z value should be 0, not -10
-        mousePosition = new Vector3(mousePosition.x, mousePosition.y, 0);
-        mouseReticle.transform.position = mousePosition;
 
-        forceDirection.transform.position = transform.position;
-    }
 
     public void CheckInput()
     {
