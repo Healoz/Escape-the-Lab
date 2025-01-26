@@ -16,8 +16,7 @@ public class PlayerScript : MonoBehaviour
 
     public bool isGrounded;
     public bool isEvading;
-
-    public float forceEvadeAmount;
+    public float evadeCooldownTime;
 
     // input
     public float xInput;
@@ -34,6 +33,7 @@ public class PlayerScript : MonoBehaviour
         evadeState.Setup(rigidBody, spriteRenderer, this);
 
         state = idleState;
+        evadeCooldownTime = evadeState.evadeMaxCooldownTime;
     }
 
     // Update is called once per frame
@@ -46,6 +46,7 @@ public class PlayerScript : MonoBehaviour
 
         SelectState();
 
+        IncrementEvadeCooldown();
 
         state.Do();
 
@@ -89,7 +90,7 @@ public class PlayerScript : MonoBehaviour
         }
 
         // Force evade on right mouse click
-        if (Input.GetMouseButtonDown(1) && !isEvading)
+        if (Input.GetMouseButtonDown(1) && !isEvading && evadeCooldownTime >= evadeState.evadeMaxCooldownTime)
         {
             ForceEvade();
         }
@@ -121,14 +122,20 @@ public class PlayerScript : MonoBehaviour
         rigidBody.linearVelocityX = runForceValue;
     }
 
+    public void IncrementEvadeCooldown()
+    {
+        if (evadeCooldownTime < evadeState.evadeMaxCooldownTime)
+        {
+            evadeCooldownTime += Time.deltaTime; // increment cooldown if cooldowntime is less than the max
+        }
+    }
+
     public void ForceEvade()
     {
 
         isEvading = true;
-        evadeState.direction = forceDirectionScript.direction;
 
-
-
+        evadeState.direction = forceDirectionScript.direction.normalized; // make sure the direction is normalised for consistent speed
     }
 
     public void SelectState()

@@ -5,12 +5,23 @@ public class EvadeState : State
     public float evadeTime;
     public float evadeStrength;
     public Vector2 direction;
+    public float evadeMaxCooldownTime;
     public override void Enter()
     {
         spriteRenderer.color = Color.magenta;
+        input.evadeCooldownTime = 0f; // resets timer to 0
+
     }
     public override void Do()
     {
+
+        Vector2 currentVelocity = rigidBody.linearVelocity;
+        rigidBody.linearVelocity = new Vector2(
+            currentVelocity.x + (-1 * direction.x) * evadeStrength,
+            (-1 * direction.y) * evadeStrength // -1 inverts the direction
+        );
+
+
         //  end condition
         if (time > evadeTime)
         {
@@ -20,6 +31,9 @@ public class EvadeState : State
         }
 
     }
-    public override void Exit() { }
+    public override void Exit()
+    {
+
+    }
 
 }
