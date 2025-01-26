@@ -6,6 +6,7 @@ public class PlayerScript : MonoBehaviour
     public AirState airState;
     public IdleState idleState;
     public RunState runState;
+    public EvadeState evadeState;
 
     public State state;
 
@@ -14,6 +15,7 @@ public class PlayerScript : MonoBehaviour
     public Rigidbody2D rigidBody;
 
     public bool isGrounded;
+    public bool isEvading;
 
     public float forceEvadeAmount;
 
@@ -29,6 +31,7 @@ public class PlayerScript : MonoBehaviour
         idleState.Setup(rigidBody, spriteRenderer, this);
         runState.Setup(rigidBody, spriteRenderer, this);
         airState.Setup(rigidBody, spriteRenderer, this);
+        evadeState.Setup(rigidBody, spriteRenderer, this);
 
         state = idleState;
     }
@@ -86,7 +89,7 @@ public class PlayerScript : MonoBehaviour
         }
 
         // Force evade on right mouse click
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && !isEvading)
         {
             ForceEvade();
         }
@@ -120,15 +123,24 @@ public class PlayerScript : MonoBehaviour
 
     public void ForceEvade()
     {
-        Debug.Log(forceDirectionScript.direction.normalized);
-        rigidBody.AddForce(forceDirectionScript.direction * -forceEvadeAmount, ForceMode2D.Impulse);
+
+        isEvading = true;
+        evadeState.direction = forceDirectionScript.direction;
+
+
+
     }
 
     public void SelectState()
     {
         State oldState = state;
 
-        if (isGrounded)
+        // evading trumps every other state regardless of movement (you can still mvoe while evading)
+        if (isEvading)
+        {
+            state = evadeState;
+        }
+        else if (isGrounded)
         {
             if (xInput != 0)
             {
