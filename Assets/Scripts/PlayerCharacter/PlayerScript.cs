@@ -7,6 +7,7 @@ public class PlayerScript : MonoBehaviour
     public IdleState idleState;
     public RunState runState;
     public EvadeState evadeState;
+    public ForcePushState forcePushState;
 
     public State state;
 
