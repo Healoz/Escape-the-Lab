@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class PlayerScript : MonoBehaviour
     public RunState runState;
     public EvadeState evadeState;
     public ForcePushState forcePushState;
+    public float currentHealth;
+    public float maxHealth;
 
     public State state;
 
@@ -24,6 +27,7 @@ public class PlayerScript : MonoBehaviour
     public float yInput;
 
     public ForceDirectionScript forceDirectionScript;
+    public GameObject projectileReference;
 
 
     void Start()
@@ -32,6 +36,8 @@ public class PlayerScript : MonoBehaviour
         runState.Setup(rigidBody, spriteRenderer, this);
         airState.Setup(rigidBody, spriteRenderer, this);
         evadeState.Setup(rigidBody, spriteRenderer, this);
+
+        currentHealth = maxHealth;
 
         state = idleState;
         evadeCooldownTime = evadeState.evadeMaxCooldownTime;
@@ -48,6 +54,9 @@ public class PlayerScript : MonoBehaviour
         SelectState();
 
         IncrementEvadeCooldown();
+
+        // ignore projectile collisions
+        Physics2D.IgnoreLayerCollision(3, 6, true);
 
         state.Do();
 
@@ -96,6 +105,30 @@ public class PlayerScript : MonoBehaviour
             ForceEvade();
         }
 
+        // Force push on left mouse click
+        if (Input.GetMouseButtonDown(0))
+        {
+            ForcePush();
+        }
+
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // taking damage on enemy collision
+        if (collision.gameObject.tag == "Enemy")
+        {
+            GameObject enemy = collision.gameObject;
+            EnemyScript enemyScript = enemy.GetComponent<EnemyScript>();
+
+            if (enemyScript == null)
+            {
+                return;
+            }
+
+            currentHealth -= enemyScript.damageAmount;
+        }
+
     }
 
     public void Jump()
@@ -139,6 +172,19 @@ public class PlayerScript : MonoBehaviour
         evadeState.direction = forceDirectionScript.direction.normalized; // make sure the direction is normalised for consistent speed
     }
 
+    public void ForcePush()
+    {
+        GameObject projectile = Instantiate(projectileReference, transform.position, Quaternion.identity);
+        Rigidbody2D rigidBody = projectile.GetComponent<Rigidbody2D>();
+
+        if (rigidBody == null)
+        {
+            return;
+        }
+
+        rigidBody.AddForce(forceDirectionScript.direction.normalized * forcePushState.pushForce, ForceMode2D.Impulse);
+    }
+
     public void SelectState()
     {
         State oldState = state;
@@ -175,5 +221,6 @@ public class PlayerScript : MonoBehaviour
 
 
     }
+
 
 }

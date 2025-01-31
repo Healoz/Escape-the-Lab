@@ -4,7 +4,10 @@ public class EnemyScript : MonoBehaviour
 {
 
     public float currentHealth;
+    public Rigidbody2D rigidBody;
     public float maxHealth;
+
+    public float damageAmount;
     public PlayerScript playerScript;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -16,19 +19,25 @@ public class EnemyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CheckEnemyDead();
+    }
 
+    public void CheckEnemyDead()
+    {
+        if (currentHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Projectile")
         {
-            Debug.Log("collision with projectile");
+            rigidBody.freezeRotation = false;
+
             currentHealth -= playerScript.forcePushState.attackAmount;
-            Debug.Log("enemy health " + currentHealth);
-
         }
-
     }
 
     // on collision with player projectile

@@ -4,6 +4,7 @@ public class ForcePushState
  : State
 {
     public float attackAmount;
+    public float pushForce;
     public override void Enter()
     {
 
