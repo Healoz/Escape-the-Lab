@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class PlayerScript : MonoBehaviour
+public class PlayerScript : StateMachineCore
 {
     // State references
     public AirState airState;
@@ -11,12 +11,6 @@ public class PlayerScript : MonoBehaviour
     public ForcePushState forcePushState;
     public float currentHealth;
     public float maxHealth;
-
-    public State state;
-
-    public SpriteRenderer spriteRenderer;
-
-    public Rigidbody2D rigidBody;
 
     public bool isGrounded;
     public bool isEvading;
@@ -32,15 +26,12 @@ public class PlayerScript : MonoBehaviour
 
     void Start()
     {
-        idleState.Setup(rigidBody, spriteRenderer, this);
-        runState.Setup(rigidBody, spriteRenderer, this);
-        airState.Setup(rigidBody, spriteRenderer, this);
-        evadeState.Setup(rigidBody, spriteRenderer, this);
+        SetupInstances();
+        machine.Set(idleState);
 
-        currentHealth = maxHealth;
+        InitialiseValues();
 
-        state = idleState;
-        evadeCooldownTime = evadeState.evadeMaxCooldownTime;
+
     }
 
     // Update is called once per frame
@@ -58,8 +49,14 @@ public class PlayerScript : MonoBehaviour
         // ignore projectile collisions
         Physics2D.IgnoreLayerCollision(3, 6, true);
 
-        state.Do();
+        machine.state.Do();
 
+    }
+
+    public void InitialiseValues()
+    {
+        currentHealth = maxHealth;
+        evadeCooldownTime = evadeState.evadeMaxCooldownTime;
     }
 
     void GetInputs()
@@ -187,37 +184,32 @@ public class PlayerScript : MonoBehaviour
 
     public void SelectState()
     {
-        State oldState = state;
+
 
         // evading trumps every other state regardless of movement (you can still mvoe while evading)
         if (isEvading)
         {
-            state = evadeState;
+            machine.Set(evadeState);
         }
         else if (isGrounded)
         {
             if (xInput != 0)
             {
-                state = runState;
+                machine.Set(runState);
 
             }
             else
             {
-                state = idleState;
+                machine.Set(idleState);
 
             }
         }
         else
         {
-            state = airState;
+            machine.Set(airState);
         }
 
-        if (oldState != state || oldState.isComplete)
-        {
-            oldState.Exit();
-            state.Initialise();
-            state.Enter();
-        }
+
 
 
     }

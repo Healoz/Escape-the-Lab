@@ -1,3 +1,4 @@
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public abstract class State : MonoBehaviour
@@ -6,11 +7,12 @@ public abstract class State : MonoBehaviour
     protected float startTime;
     public float time => Time.time - startTime;
 
-    protected Rigidbody2D rigidBody;
+    protected StateMachineCore core;
 
     // blackboard variables
-    protected SpriteRenderer spriteRenderer;
-    protected PlayerScript input;
+    protected Rigidbody2D rigidBody => core.rigidBody;
+    protected SpriteRenderer spriteRenderer => core.spriteRenderer;
+    protected PlayerScript input => core.input;
 
     public virtual void Enter() { }
     public virtual void Do() { }
@@ -19,11 +21,9 @@ public abstract class State : MonoBehaviour
 
     public virtual void Exit() { }
 
-    public void Setup(Rigidbody2D _rigidBody, SpriteRenderer _spriteRenderer, PlayerScript _playerScript)
+    public void SetCore(StateMachineCore _core)
     {
-        rigidBody = _rigidBody;
-        spriteRenderer = _spriteRenderer;
-        input = _playerScript;
+        core = _core;
     }
 
     public void Initialise()
