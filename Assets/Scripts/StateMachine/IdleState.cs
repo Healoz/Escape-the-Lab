@@ -9,7 +9,7 @@ public class IdleState : State
     public override void Do()
     {
         // end condition
-        if (!input.isGrounded)
+        if (!groundColliderScript.isGrounded)
         {
             Debug.Log("idle done");
             isComplete = true;

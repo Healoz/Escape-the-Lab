@@ -3,16 +3,16 @@ using UnityEngine.Rendering;
 
 public class PlayerScript : StateMachineCore
 {
+    [Header("State References")]
     // State references
     public AirState airState;
     public IdleState idleState;
     public RunState runState;
     public EvadeState evadeState;
     public ForcePushState forcePushState;
-    public float currentHealth;
-    public float maxHealth;
 
-    public bool isGrounded;
+    [Header("Player Specific Variables")]
+    // public bool isGrounded;
     public bool isEvading;
     public float evadeCooldownTime;
 
@@ -70,7 +70,7 @@ public class PlayerScript : StateMachineCore
     public void CheckInput()
     {
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && groundColliderScript.isGrounded)
         {
             Jump();
 
@@ -130,7 +130,7 @@ public class PlayerScript : StateMachineCore
 
     public void Jump()
     {
-        isGrounded = false;
+        // isGrounded = false;
         rigidBody.linearVelocityY = airState.jumpStrength;
     }
 
@@ -191,7 +191,7 @@ public class PlayerScript : StateMachineCore
         {
             machine.Set(evadeState);
         }
-        else if (isGrounded)
+        else if (groundColliderScript.isGrounded)
         {
             if (xInput != 0)
             {

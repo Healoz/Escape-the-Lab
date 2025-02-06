@@ -10,7 +10,7 @@ public class RunState : State
     public override void Do()
     {
         //  end condition
-        if (!input.isGrounded)
+        if (!groundColliderScript.isGrounded)
         {
             Debug.Log("run done");
             isComplete = true;
