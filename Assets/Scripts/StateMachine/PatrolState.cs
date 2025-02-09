@@ -24,6 +24,7 @@ public class PatrolState : State
         {
             if (navigate.isComplete)
             {
+                Debug.Log("navigate is complete");
                 Set(idle, true);
                 rigidBody.linearVelocity = new Vector2(0, rigidBody.linearVelocity.y);
             }

@@ -5,12 +5,11 @@ public class EvadeState : State
     public float evadeTime;
     public float evadeStrength;
     public Vector2 direction;
-    public float evadeMaxCooldownTime;
+    public EvadeLogic evadeLogic;
     public override void Enter()
     {
         spriteRenderer.color = Color.magenta;
-        // input.evadeCooldownTime = 0f; // resets timer to 0
-
+        evadeLogic.evadeCooldownTime = 0f; // resets timer to 0
     }
     public override void Do()
     {
@@ -26,7 +25,7 @@ public class EvadeState : State
         if (time > evadeTime)
         {
             Debug.Log("evade done");
-            // input.isEvading = false; // only this script knows the state time elapsed
+            evadeLogic.isEvading = false; // only this script knows the state time elapsed
             // needs to be fixed, have a way for Player object to know if evade is done
             isComplete = true;
         }

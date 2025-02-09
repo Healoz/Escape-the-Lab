@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class StateMachineCore : MonoBehaviour
@@ -22,5 +23,16 @@ public abstract class StateMachineCore : MonoBehaviour
         {
             state.SetCore(this);
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+#if UNITY_EDITOR
+        if (Application.isPlaying && state != null)
+        {
+            List<State> states = machine.GetActiveStateBranch();
+            UnityEditor.Handles.Label(transform.position, "Active states: " + string.Join(" > ", states));
+        }
+#endif
     }
 }

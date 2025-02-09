@@ -12,9 +12,6 @@ public class PlayerScript : StateMachineCore
     public ForcePushState forcePushState;
 
     [Header("Player Specific Variables")]
-    // public bool isGrounded;
-    public bool isEvading;
-    public float evadeCooldownTime;
 
     // input
     public float xInput;
@@ -44,8 +41,6 @@ public class PlayerScript : StateMachineCore
 
         SelectState();
 
-        IncrementEvadeCooldown();
-
         // ignore projectile collisions
         Physics2D.IgnoreLayerCollision(3, 6, true);
 
@@ -56,7 +51,6 @@ public class PlayerScript : StateMachineCore
     public void InitialiseValues()
     {
         currentHealth = maxHealth;
-        evadeCooldownTime = evadeState.evadeMaxCooldownTime;
     }
 
     void GetInputs()
@@ -97,7 +91,7 @@ public class PlayerScript : StateMachineCore
         }
 
         // Force evade on right mouse click
-        if (Input.GetMouseButtonDown(1) && !isEvading && evadeCooldownTime >= evadeState.evadeMaxCooldownTime)
+        if (Input.GetMouseButtonDown(1) && state != evadeState && evadeState.evadeLogic.evadeCooldownTime >= evadeState.evadeLogic.evadeMaxCooldownTime)
         {
             ForceEvade();
         }
@@ -153,18 +147,12 @@ public class PlayerScript : StateMachineCore
         rigidBody.linearVelocityX = runForceValue;
     }
 
-    public void IncrementEvadeCooldown()
-    {
-        if (evadeCooldownTime < evadeState.evadeMaxCooldownTime)
-        {
-            evadeCooldownTime += Time.deltaTime; // increment cooldown if cooldowntime is less than the max
-        }
-    }
+
 
     public void ForceEvade()
     {
 
-        isEvading = true;
+        evadeState.evadeLogic.isEvading = true;
 
         evadeState.direction = forceDirectionScript.direction.normalized; // make sure the direction is normalised for consistent speed
     }
@@ -187,7 +175,7 @@ public class PlayerScript : StateMachineCore
 
 
         // evading trumps every other state regardless of movement (you can still mvoe while evading)
-        if (isEvading)
+        if (evadeState.evadeLogic.isEvading)
         {
             machine.Set(evadeState);
         }
