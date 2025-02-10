@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8620873599951361655}
   - component: {fileID: 8221555618416308682}
   m_Layer: 6
-  m_Name: Projectile
+  m_Name: ForcePushProjectile
   m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
