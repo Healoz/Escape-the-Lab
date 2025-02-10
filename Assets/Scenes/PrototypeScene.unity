@@ -685,7 +685,7 @@ GameObject:
   m_Component:
   - component: {fileID: 404927484}
   - component: {fileID: 404927483}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: Shoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -951,7 +951,7 @@ GameObject:
   - component: {fileID: 522628531}
   - component: {fileID: 522628530}
   - component: {fileID: 522628529}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: GroundCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1915,7 +1915,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1315176121}
   - component: {fileID: 1315176122}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: Idle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2049,9 +2049,9 @@ GameObject:
   - component: {fileID: 1484234502}
   - component: {fileID: 1484234501}
   - component: {fileID: 1484234500}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: Scientist
-  m_TagString: Player
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2460,7 +2460,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1606094451}
   - component: {fileID: 1606094452}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: Shooting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2496,8 +2496,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   idleState: {fileID: 1315176122}
   shootState: {fileID: 404927483}
-  shootSpeed: 30
-  shotIntervalInSeconds: 2
+  shotIntervalInSeconds: 1
 --- !u!1 &1724675179
 GameObject:
   m_ObjectHideFlags: 0
@@ -2726,7 +2725,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2077076051}
-  m_Layer: 3
+  m_Layer: 8
   m_Name: Behaviours
   m_TagString: Untagged
   m_Icon: {fileID: 0}

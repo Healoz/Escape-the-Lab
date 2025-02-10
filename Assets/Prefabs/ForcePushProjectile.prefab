@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8121145775315161717}
   - component: {fileID: 8620873599951361655}
   - component: {fileID: 8221555618416308682}
+  - component: {fileID: 5052578834016130858}
   m_Layer: 6
   m_Name: ForcePushProjectile
   m_TagString: Projectile
@@ -162,3 +163,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &5052578834016130858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942249236281588335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65d376aef20671c49924fa06a172273a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxLifeTime: 3
+  currentLifetime: 0

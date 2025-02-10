@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 272282290321647791}
   - component: {fileID: 4603250296817952771}
   - component: {fileID: 4309929698552504575}
-  m_Layer: 6
+  - component: {fileID: 6184108238343337110}
+  m_Layer: 7
   m_Name: ScientistProjectile
   m_TagString: Projectile
   m_Icon: {fileID: 0}
@@ -162,3 +163,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &6184108238343337110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4957814660725148249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65d376aef20671c49924fa06a172273a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxLifeTime: 2
+  currentLifetime: 0

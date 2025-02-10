@@ -7,6 +7,9 @@ public class ScientistScript : StateMachineCore
     {
         SetupInstances();
         machine.Set(shootingState);
+
+        // ignore projectile collisions
+        Physics2D.IgnoreLayerCollision(8, 7, true);
     }
 
     // Update is called once per frame

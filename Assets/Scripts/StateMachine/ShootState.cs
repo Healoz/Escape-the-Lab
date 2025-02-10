@@ -38,7 +38,7 @@ public class ShootState : State
 
     public Vector2 GetShootDirection()
     {
-        return Vector2.right.normalized;
+        return (target.transform.position - transform.position).normalized;
     }
     public override void Exit() { }
 }
