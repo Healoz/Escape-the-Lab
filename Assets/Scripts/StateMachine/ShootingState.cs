@@ -2,9 +2,13 @@ using UnityEngine;
 
 public class ShootingState : State
 {
+    public BackAwayState backAwayState;
     public IdleState idleState;
     public ShootState shootState;
     public float shotIntervalInSeconds;
+    public GameObject target;
+    public float distanceFromTarget;
+    public float distanceToBackAway;
 
     public override void Enter()
     {
@@ -14,22 +18,38 @@ public class ShootingState : State
     }
     public override void Do()
     {
-        //  end condition here - no end condition yet
-        if (state == shootState)
-        { // 
-            if (shootState.isComplete)
-            {
-                Set(idleState);
-            }
+
+        GetDistanceFromTarget();
+
+        if (distanceFromTarget < distanceToBackAway) // back away if player too close
+        {
+            Set(backAwayState);
         }
         else
         {
-            if (idleState.time > shotIntervalInSeconds)
+            //  end condition here - no end condition yet
+            if (state == shootState)
+            { // 
+                if (shootState.isComplete)
+                {
+                    Set(idleState);
+                }
+            }
+            else
             {
-                Set(shootState);
+                if (idleState.time > shotIntervalInSeconds)
+                {
+                    Set(shootState);
+                }
             }
         }
 
+
+    }
+
+    public void GetDistanceFromTarget()
+    {
+        distanceFromTarget = Vector2.Distance(transform.position, target.transform.position);
     }
 
 

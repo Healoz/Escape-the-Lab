@@ -4,14 +4,17 @@ public class ScientistScript : StateMachineCore
 {
     [Header("State References")]
     public ShootingState shootingState;
+    public IdleState idleState;
 
     [Header("Scientist Specific Variables")]
     public DetectionRadiusScript detectionRadiusScript;
 
+    public bool playerDetected => detectionRadiusScript.playerDetected;
+
     void Start()
     {
         SetupInstances();
-        machine.Set(shootingState);
+        machine.Set(idleState);
 
         // ignore projectile collisions
         Physics2D.IgnoreLayerCollision(8, 7, true);
@@ -30,9 +33,13 @@ public class ScientistScript : StateMachineCore
 
     public void SelectState()
     {
-        if (state.isComplete)
+        if (playerDetected) // only shoot if player detected
         {
-
+            machine.Set(shootingState);
+        }
+        else
+        {
+            machine.Set(idleState);
         }
 
         state.DoBranch();

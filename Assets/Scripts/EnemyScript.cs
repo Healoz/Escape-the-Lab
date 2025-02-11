@@ -36,7 +36,7 @@ public class EnemyScript : MonoBehaviour
         {
             rigidBody.freezeRotation = false;
 
-            currentHealth -= playerScript.forcePushState.attackAmount;
+            // currentHealth -= playerScript.forcePushState.attackAmount;
         }
     }
 

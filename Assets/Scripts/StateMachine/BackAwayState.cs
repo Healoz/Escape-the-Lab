@@ -1,18 +1,16 @@
 using UnityEngine;
 
-public class ForcePushState
- : State
+public class BackAwayState : State
 {
-    public float pushForce;
+
     public override void Enter()
     {
-
-        spriteRenderer.color = Color.yellow;
+        spriteRenderer.color = Color.blue;
     }
     public override void Do()
     {
-        // end condition here
-
+        //  end condition here
     }
+
     public override void Exit() { }
 }
