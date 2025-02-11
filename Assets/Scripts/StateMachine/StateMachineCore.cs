@@ -13,7 +13,37 @@ public abstract class StateMachineCore : MonoBehaviour
     public float currentHealth;
     public float maxHealth;
     public State state => machine.state;
+    public bool isAlive => currentHealth > 0;
 
+    // blackboard functions
+    public void CheckIsDead()
+    {
+        if (!isAlive)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Projectile")
+        {
+            Debug.Log("collised with projectile");
+
+            ProjectileScript projectile = collision.gameObject.GetComponent<ProjectileScript>();
+
+            if (projectile == null)
+            {
+                return;
+            }
+
+            currentHealth -= projectile.damageAmount;
+
+            CheckIsDead();
+        }
+    }
+
+    // state machine functions
     public void SetupInstances()
     {
         machine = new StateMachine();
@@ -24,6 +54,7 @@ public abstract class StateMachineCore : MonoBehaviour
             state.SetCore(this);
         }
     }
+
 
     private void OnDrawGizmos()
     {

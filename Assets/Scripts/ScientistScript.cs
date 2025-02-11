@@ -2,7 +2,12 @@ using UnityEngine;
 
 public class ScientistScript : StateMachineCore
 {
+    [Header("State References")]
     public ShootingState shootingState;
+
+    [Header("Scientist Specific Variables")]
+    public DetectionRadiusScript detectionRadiusScript;
+
     void Start()
     {
         SetupInstances();
@@ -39,4 +44,5 @@ public class ScientistScript : StateMachineCore
     {
         state.FixedDoBranch();
     }
+
 }

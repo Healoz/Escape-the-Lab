@@ -7,9 +7,12 @@ public class ShootState : State
     public GameObject target;
     public float shootTime;
     public float shootForce;
+    public float shotDamage;
 
     public override void Enter()
     {
+        ProjectileScript projectileScript = projectileReference.gameObject.GetComponent<ProjectileScript>();
+        projectileScript.damageAmount = shotDamage;
         spriteRenderer.color = Color.red;
         ShootProjectile(); // on enter, shoot projectile
     }

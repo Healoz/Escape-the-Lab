@@ -104,24 +104,6 @@ public class PlayerScript : StateMachineCore
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        // taking damage on enemy collision
-        if (collision.gameObject.tag == "Enemy")
-        {
-            GameObject enemy = collision.gameObject;
-            EnemyScript enemyScript = enemy.GetComponent<EnemyScript>();
-
-            if (enemyScript == null)
-            {
-                return;
-            }
-
-            currentHealth -= enemyScript.damageAmount;
-        }
-
-    }
-
     public void Jump()
     {
         // isGrounded = false;

@@ -3,7 +3,9 @@ using UnityEngine;
 public class ProjectileScript : MonoBehaviour
 {
     public float maxLifeTime;
-    public float currentLifetime = 0;
+
+    public float damageAmount;
+    private float currentLifetime = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
