@@ -9,12 +9,13 @@ public class ShootingState : State
     public GameObject target;
     public float distanceFromTarget;
     public float distanceToBackAway;
+    public float nextShotTime;
 
     public override void Enter()
     {
         spriteRenderer.color = Color.cyan;
-
-        Set(shootState, true);
+        nextShotTime = Time.time;
+        Set(idleState, true);
     }
     public override void Do()
     {
@@ -24,23 +25,21 @@ public class ShootingState : State
         if (distanceFromTarget < distanceToBackAway) // back away if player too close
         {
             Set(backAwayState);
+            return;
         }
-        else
+
+
+        // Only shoot if enough time has passed since last shot
+        if (Time.time >= nextShotTime)
         {
-            //  end condition here - no end condition yet
-            if (state == shootState)
-            { // 
-                if (shootState.isComplete)
-                {
-                    Set(idleState);
-                }
-            }
-            else
+            if (state == idleState)
             {
-                if (idleState.time > shotIntervalInSeconds)
-                {
-                    Set(shootState);
-                }
+                Set(shootState);
+            }
+            else if (state == shootState && shootState.isComplete)
+            {
+                Set(idleState);
+                nextShotTime = Time.time + shotIntervalInSeconds; // Schedule next shot
             }
         }
 

@@ -676,6 +676,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &634812431 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1161943676710022920, guid: 884d36cbfe471d946a0406682454bf00, type: 3}
+  m_PrefabInstance: {fileID: 1789563842111175252}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25bcdca5bee075146af703cc0e1821d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &710125906
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1838,6 +1849,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 576391a81e85ee4468b6c36989be5fa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  threat: {fileID: 5889552653912764846}
+  backAwayForce: 5
+  backAwayShotInterval: 1.5
+  shootState: {fileID: 634812431}
+  nextShotTime: 0
 --- !u!4 &554344681525740910
 Transform:
   m_ObjectHideFlags: 0
@@ -1924,6 +1940,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 5889552653912764846}
+    - target: {fileID: 1161943676710022920, guid: 884d36cbfe471d946a0406682454bf00, type: 3}
+      propertyPath: shootForce
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 1450989272803084320, guid: 884d36cbfe471d946a0406682454bf00, type: 3}
       propertyPath: target
       value: 
@@ -1934,7 +1954,7 @@ PrefabInstance:
       objectReference: {fileID: 2142739187}
     - target: {fileID: 1450989272803084320, guid: 884d36cbfe471d946a0406682454bf00, type: 3}
       propertyPath: distanceToBackAway
-      value: 4.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1450989272803084320, guid: 884d36cbfe471d946a0406682454bf00, type: 3}
       propertyPath: minDistanceToBackAway
@@ -1954,11 +1974,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7514230311611401774, guid: 884d36cbfe471d946a0406682454bf00, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.29
+      value: 3.94
       objectReference: {fileID: 0}
     - target: {fileID: 7514230311611401774, guid: 884d36cbfe471d946a0406682454bf00, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.82
+      value: -2.6
       objectReference: {fileID: 0}
     - target: {fileID: 7514230311611401774, guid: 884d36cbfe471d946a0406682454bf00, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2550,7 +2570,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 5307092825019420960}
   groundColliderScript: {fileID: 4073219225567175205}
   currentHealth: 100
-  maxHealth: 100
+  maxHealth: 300
   airState: {fileID: 6789805440581508627}
   idleState: {fileID: 1834885954351495770}
   runState: {fileID: 9097930490065964777}
