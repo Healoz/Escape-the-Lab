@@ -3,13 +3,15 @@ using UnityEngine;
 public class DetectionRadiusScript : MonoBehaviour
 {
     public float detectionRadius;
-    public bool playerDetected;
+    public bool playerCurrentlyDetected;
+    public bool playerHasBeenDetected;
     public CircleCollider2D circleCollider2D;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         circleCollider2D.radius = detectionRadius;
-        playerDetected = false;
+        playerCurrentlyDetected = false;
+        playerHasBeenDetected = false;
     }
 
     // Update is called once per frame
@@ -24,7 +26,8 @@ public class DetectionRadiusScript : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             Debug.Log("trigger entered");
-            playerDetected = true;
+            playerCurrentlyDetected = true;
+            playerHasBeenDetected = true;
         }
 
     }
@@ -34,7 +37,7 @@ public class DetectionRadiusScript : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             Debug.Log("trigger exited");
-            playerDetected = false;
+            playerCurrentlyDetected = false;
         }
     }
 }

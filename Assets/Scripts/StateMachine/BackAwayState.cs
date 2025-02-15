@@ -4,14 +4,14 @@ public class BackAwayState : State
 {
     public GameObject threat;
     public float backAwayForce;
-    public float backAwayShotInterval;
+    public ShootIntervalScript shootIntervalScript;
     public ShootState shootState;
-    public float nextShotTime;
+    public RetreatState retreatState;
 
     public override void Enter()
     {
         spriteRenderer.color = Color.blue;
-        nextShotTime = Time.time;
+        shootIntervalScript.isShooting = true;
 
     }
     public override void Do()
@@ -24,7 +24,7 @@ public class BackAwayState : State
 
         // shooting logic
         // Only shoot if enough time has passed since last shot
-        if (state != shootState && Time.time >= nextShotTime)
+        if (state != shootState && shootIntervalScript.currentShotTime >= shootIntervalScript.gracePeriodInterval)
         {
             Set(shootState);
         }
@@ -32,8 +32,7 @@ public class BackAwayState : State
         {
             if (shootState.isComplete)
             {
-                Set(null);
-                nextShotTime = Time.time + backAwayShotInterval;
+                Set(retreatState);
             }
         }
 
@@ -58,5 +57,6 @@ public class BackAwayState : State
     public override void Exit()
     {
         rigidBody.linearVelocity = new Vector2(0, rigidBody.linearVelocity.y);
+        shootIntervalScript.isShooting = false;
     }
 }

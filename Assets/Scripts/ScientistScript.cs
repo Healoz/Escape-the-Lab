@@ -4,12 +4,14 @@ public class ScientistScript : StateMachineCore
 {
     [Header("State References")]
     public ShootingState shootingState;
+    public ChaseState chaseState;
     public IdleState idleState;
 
     [Header("Scientist Specific Variables")]
     public DetectionRadiusScript detectionRadiusScript;
+    public bool playerDetected => detectionRadiusScript.playerCurrentlyDetected;
+    public bool playerHasBeenDetected => detectionRadiusScript.playerHasBeenDetected;
 
-    public bool playerDetected => detectionRadiusScript.playerDetected;
 
     void Start()
     {
@@ -33,12 +35,16 @@ public class ScientistScript : StateMachineCore
 
     public void SelectState()
     {
-        if (playerDetected) // only shoot if player detected
+        if (playerDetected) // only shoot if player in range
         {
             machine.Set(shootingState);
         }
-        else
+        else if (playerHasBeenDetected) // player out of range, but has been seen before
         {
+            machine.Set(chaseState);
+        }
+        else
+        { // has never seen player, idle (TODO: patrol state)
             machine.Set(idleState);
         }
 

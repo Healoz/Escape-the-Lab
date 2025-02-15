@@ -5,17 +5,18 @@ public class ShootingState : State
     public BackAwayState backAwayState;
     public IdleState idleState;
     public ShootState shootState;
-    public float shotIntervalInSeconds;
+    public ShootIntervalScript shootIntervalScript;
+    // public float shotIntervalInSeconds;
     public GameObject target;
     public float distanceFromTarget;
     public float distanceToBackAway;
-    public float nextShotTime;
+    // public float nextShotTime;
 
     public override void Enter()
     {
         spriteRenderer.color = Color.cyan;
-        nextShotTime = Time.time;
         Set(idleState, true);
+        shootIntervalScript.isShooting = true;
     }
     public override void Do()
     {
@@ -30,7 +31,7 @@ public class ShootingState : State
 
 
         // Only shoot if enough time has passed since last shot
-        if (Time.time >= nextShotTime)
+        if (shootIntervalScript.currentShotTime >= shootIntervalScript.gracePeriodInterval)
         {
             if (state == idleState)
             {
@@ -39,11 +40,8 @@ public class ShootingState : State
             else if (state == shootState && shootState.isComplete)
             {
                 Set(idleState);
-                nextShotTime = Time.time + shotIntervalInSeconds; // Schedule next shot
             }
         }
-
-
     }
 
     public void GetDistanceFromTarget()
@@ -51,6 +49,8 @@ public class ShootingState : State
         distanceFromTarget = Vector2.Distance(transform.position, target.transform.position);
     }
 
-
-    public override void Exit() { }
+    public override void Exit()
+    {
+        shootIntervalScript.isShooting = false;
+    }
 }
