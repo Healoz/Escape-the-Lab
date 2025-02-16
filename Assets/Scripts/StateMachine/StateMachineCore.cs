@@ -15,14 +15,6 @@ public abstract class StateMachineCore : MonoBehaviour
     public State state => machine.state;
     public bool isAlive => currentHealth > 0;
 
-    // blackboard functions
-    public void CheckIsDead()
-    {
-        if (!isAlive)
-        {
-            Destroy(gameObject);
-        }
-    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -38,8 +30,6 @@ public abstract class StateMachineCore : MonoBehaviour
             }
 
             currentHealth -= projectile.damageAmount;
-
-            CheckIsDead();
         }
     }
 

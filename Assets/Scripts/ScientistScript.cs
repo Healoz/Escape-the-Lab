@@ -6,6 +6,7 @@ public class ScientistScript : StateMachineCore
     public ShootingState shootingState;
     public ChaseState chaseState;
     public IdleState idleState;
+    public DeadState deadState;
 
     [Header("Scientist Specific Variables")]
     public DetectionRadiusScript detectionRadiusScript;
@@ -35,21 +36,27 @@ public class ScientistScript : StateMachineCore
 
     public void SelectState()
     {
-        if (playerDetected) // only shoot if player in range
+        if (!isAlive) // do nothing else if is dead
         {
-            machine.Set(shootingState);
-        }
-        else if (playerHasBeenDetected) // player out of range, but has been seen before
-        {
-            machine.Set(chaseState);
+            machine.Set(deadState);
         }
         else
-        { // has never seen player, idle (TODO: patrol state)
-            machine.Set(idleState);
+        {
+            if (playerDetected) // only shoot if player in range
+            {
+                machine.Set(shootingState);
+            }
+            else if (playerHasBeenDetected) // player out of range, but has been seen before
+            {
+                machine.Set(chaseState);
+            }
+            else
+            { // has never seen player, idle (TODO: patrol state)
+                machine.Set(idleState);
+            }
         }
 
         state.DoBranch();
-
 
     }
 

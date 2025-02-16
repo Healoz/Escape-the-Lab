@@ -1,5 +1,8 @@
+using System.Collections;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class PlayerScript : StateMachineCore
 {
@@ -10,6 +13,7 @@ public class PlayerScript : StateMachineCore
     public RunState runState;
     public EvadeState evadeState;
     public ForcePushState forcePushState;
+    public DeadState deadState;
 
     [Header("Player Specific Variables")]
 
@@ -63,6 +67,10 @@ public class PlayerScript : StateMachineCore
 
     public void CheckInput()
     {
+        if (!isAlive)
+        {
+            return; // don't recieve input if player is dead
+        }
 
         if (Input.GetKeyDown(KeyCode.Space) && groundColliderScript.isGrounded)
         {
@@ -155,33 +163,47 @@ public class PlayerScript : StateMachineCore
     public void SelectState()
     {
 
-
-        // evading trumps every other state regardless of movement (you can still mvoe while evading)
-        if (evadeState.evadeLogic.isEvading)
+        if (!isAlive) // do nothing else if player is dead
         {
-            machine.Set(evadeState);
-        }
-        else if (groundColliderScript.isGrounded)
-        {
-            if (xInput != 0)
-            {
-                machine.Set(runState);
-
-            }
-            else
-            {
-                machine.Set(idleState);
-
-            }
+            machine.Set(deadState);
+            StartCoroutine(RestartLevel()); // restart level on death after short delay
         }
         else
         {
-            machine.Set(airState);
+            // evading trumps every other state regardless of movement (you can still mvoe while evading)
+            if (evadeState.evadeLogic.isEvading)
+            {
+                machine.Set(evadeState);
+            }
+            else if (groundColliderScript.isGrounded)
+            {
+                if (xInput != 0)
+                {
+                    machine.Set(runState);
+
+                }
+                else
+                {
+                    machine.Set(idleState);
+
+                }
+            }
+            else
+            {
+                machine.Set(airState);
+            }
         }
 
+    }
 
+    public IEnumerator RestartLevel()
+    {
+        float restartDelay = 1.3f;
 
+        yield return new WaitForSeconds(restartDelay);
 
+        // reload current scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
 
