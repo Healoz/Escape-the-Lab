@@ -1,4 +1,9 @@
 using UnityEngine;
+using System.Collections;
+using JetBrains.Annotations;
+using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
+
 
 public class ScientistScript : StateMachineCore
 {
@@ -39,6 +44,8 @@ public class ScientistScript : StateMachineCore
         if (!isAlive) // do nothing else if is dead
         {
             machine.Set(deadState);
+            StartCoroutine(KillEnemy());
+
         }
         else
         {
@@ -63,6 +70,16 @@ public class ScientistScript : StateMachineCore
     public void FixedSelectState()
     {
         state.FixedDoBranch();
+    }
+
+    public IEnumerator KillEnemy()
+    {
+        float deleteDelay = 1.3f;
+
+        yield return new WaitForSeconds(deleteDelay);
+
+        // delete enemy
+        Destroy(gameObject);
     }
 
 }
