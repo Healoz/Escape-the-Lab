@@ -15,6 +15,9 @@ public abstract class State : MonoBehaviour
     protected GroundColliderScript groundColliderScript => core.groundColliderScript;
     protected float currentHealth => core.currentHealth;
     protected float maxHealth => core.maxHealth;
+    protected bool isHit => core.isHit;
+    protected float hitDuration => core.hitDuration;
+    protected Vector2 projectileDirection => core.projectileDirection;
 
     // Hierarchal state machine
     public StateMachine machine;

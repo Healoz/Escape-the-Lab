@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class ProjectileScript : MonoBehaviour
@@ -24,4 +25,18 @@ public class ProjectileScript : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        Destroy(gameObject);
+        StartCoroutine(DeleteSelfAfterDelay());
+    }
+
+    public IEnumerator DeleteSelfAfterDelay()
+    {
+        yield return new WaitForSeconds(0.1f);
+        Destroy(gameObject);
+    }
+
+
 }

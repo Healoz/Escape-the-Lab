@@ -23,7 +23,7 @@ public class ShootingState : State
 
     public override void Enter()
     {
-        spriteRenderer.color = Color.cyan;
+
         Set(idleState, true);
         shootIntervalScript.isShooting = true;
         moveDirection = Random.value < 0.5f ? 1 : -1; // initialise random direction -1 or 1

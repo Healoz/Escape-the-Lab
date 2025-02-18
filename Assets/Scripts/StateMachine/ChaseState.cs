@@ -8,7 +8,7 @@ public class ChaseState : State
     public override void Enter()
     {
 
-        spriteRenderer.color = Color.green;
+
 
     }
     public override void Do()

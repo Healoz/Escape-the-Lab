@@ -10,7 +10,7 @@ public class BackAwayState : State
 
     public override void Enter()
     {
-        spriteRenderer.color = Color.blue;
+
         shootIntervalScript.isShooting = true;
 
     }

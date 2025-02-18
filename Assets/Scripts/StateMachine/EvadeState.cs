@@ -8,7 +8,7 @@ public class EvadeState : State
     public EvadeLogic evadeLogic;
     public override void Enter()
     {
-        spriteRenderer.color = Color.magenta;
+
         evadeLogic.evadeCooldownTime = 0f; // resets timer to 0
     }
     public override void Do()

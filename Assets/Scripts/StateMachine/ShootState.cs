@@ -13,7 +13,7 @@ public class ShootState : State
     {
         ProjectileScript projectileScript = projectileReference.gameObject.GetComponent<ProjectileScript>();
         projectileScript.damageAmount = shotDamage;
-        spriteRenderer.color = Color.red;
+
         ShootProjectile(); // on enter, shoot projectile
     }
     public override void Do()

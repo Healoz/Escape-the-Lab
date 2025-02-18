@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,9 @@ public abstract class StateMachineCore : MonoBehaviour
     public StateMachine machine;
     public float currentHealth;
     public float maxHealth;
+    public bool isHit;
+    public float hitDuration;
+    public Vector2 projectileDirection;
     public State state => machine.state;
     public bool isAlive => currentHealth > 0;
 
@@ -20,17 +24,37 @@ public abstract class StateMachineCore : MonoBehaviour
     {
         if (collision.gameObject.tag == "Projectile")
         {
-            Debug.Log("collised with projectile");
-
-            ProjectileScript projectile = collision.gameObject.GetComponent<ProjectileScript>();
-
-            if (projectile == null)
-            {
-                return;
-            }
-
-            currentHealth -= projectile.damageAmount;
+            projectileDirection = GetDirectionOfProjectile(collision);
+            TakeHealth(collision);
+            StartCoroutine(SetIsHitStateForHitDuration());
         }
+    }
+
+    private Vector2 GetDirectionOfProjectile(Collision2D collision)
+    {
+        ProjectileScript projectileScript = collision.gameObject.GetComponent<ProjectileScript>(); // gets current colliding projectile
+        return (projectileScript.transform.position - transform.position).normalized;
+    }
+
+    public void TakeHealth(Collision2D collision)
+    {
+        Debug.Log("collised with projectile");
+
+        ProjectileScript projectile = collision.gameObject.GetComponent<ProjectileScript>();
+
+        if (projectile == null)
+        {
+            return;
+        }
+
+        currentHealth -= projectile.damageAmount;
+    }
+
+    public IEnumerator SetIsHitStateForHitDuration()
+    {
+        isHit = true;
+        yield return new WaitForSeconds(hitDuration);
+        isHit = false;
     }
 
     // state machine functions

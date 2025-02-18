@@ -5,7 +5,7 @@ public class RunState : State
     public float runSpeed;
     public override void Enter()
     {
-        spriteRenderer.color = Color.cyan;
+
     }
     public override void Do()
     {

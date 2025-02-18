@@ -7,7 +7,7 @@ public class ForcePushState
     public override void Enter()
     {
 
-        spriteRenderer.color = Color.yellow;
+
     }
     public override void Do()
     {
