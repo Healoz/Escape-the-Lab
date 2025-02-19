@@ -53,8 +53,10 @@ public abstract class StateMachineCore : MonoBehaviour
     public IEnumerator SetIsHitStateForHitDuration()
     {
         isHit = true;
+        spriteRenderer.color = Color.red;
         yield return new WaitForSeconds(hitDuration);
         isHit = false;
+        spriteRenderer.color = Color.green;
     }
 
     // state machine functions

@@ -13,7 +13,7 @@ public class RagdollState : State
     public override void Enter()
     {
         rigidBody.linearVelocity = new Vector2(0, rigidBody.linearVelocity.y);
-        spriteRenderer.color = Color.blue;
+        spriteRenderer.color = Color.red;
 
         knockBackDirection = -projectileDirection.normalized; // get opposite direction of projectile
         rigidBody.linearVelocity = Vector2.zero; // reset velocity

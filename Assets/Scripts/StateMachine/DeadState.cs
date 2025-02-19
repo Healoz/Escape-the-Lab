@@ -7,10 +7,14 @@ public class DeadState : State
     {
 
         rigidBody.linearVelocity = new Vector2(0, rigidBody.linearVelocity.y); // reset linear velocity
+        spriteRenderer.color = Color.red;
     }
     public override void Do()
     {
 
     }
-    public override void Exit() { }
+    public override void Exit()
+    {
+        spriteRenderer.color = Color.yellow;
+    }
 }
