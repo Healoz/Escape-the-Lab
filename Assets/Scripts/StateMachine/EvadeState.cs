@@ -10,6 +10,7 @@ public class EvadeState : State
     {
 
         evadeLogic.evadeCooldownTime = 0f; // resets timer to 0
+        evadeLogic.evadeCharges -= 1; // minus 1 evade charge
     }
     public override void Do()
     {

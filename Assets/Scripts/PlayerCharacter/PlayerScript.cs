@@ -99,8 +99,27 @@ public class PlayerScript : StateMachineCore
         }
 
         // Force evade on right mouse click
-        if (Input.GetMouseButtonDown(1) && state != evadeState && evadeState.evadeLogic.evadeCooldownTime >= evadeState.evadeLogic.evadeMaxCooldownTime)
+        if (Input.GetMouseButtonDown(1))
         {
+            // if currently evading, don't evade again
+            if (state == evadeState)
+            {
+                return;
+            }
+
+            // if cooldown time isn't complete, don't evade
+            if (evadeState.evadeLogic.evadeCooldownTime < evadeState.evadeLogic.evadeMaxCooldownTime)
+            {
+                return;
+            }
+
+            // if there are no charges, don't evade
+            if (evadeState.evadeLogic.evadeCharges <= 0)
+            {
+                return;
+            }
+
+
             ForceEvade();
         }
 
