@@ -1,4 +1,5 @@
 using System.Numerics;
+using NUnit.Framework;
 using UnityEngine;
 using Vector2 = UnityEngine.Vector2;
 
@@ -6,7 +7,8 @@ public class RagdollState : State
 {
     public float knockBackForce;
     public float upwardForce;
-
+    public float ragdollMaxTime;
+    public float ragDollTime;
     public Vector2 knockBackDirection;
 
 
@@ -22,9 +24,9 @@ public class RagdollState : State
     }
     public override void Do()
     {
-        // end condition here
-        if (!isHit) // isHit timer complete
-        {
+        // end condition
+        if (!isHit)
+        { // determined by isHit value
             isComplete = true;
             return;
         }

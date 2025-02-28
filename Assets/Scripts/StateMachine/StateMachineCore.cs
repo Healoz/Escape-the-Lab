@@ -54,8 +54,12 @@ public abstract class StateMachineCore : MonoBehaviour
     {
         isHit = true;
         spriteRenderer.color = Color.red;
+        // enemy ragdolls for the specified time
         yield return new WaitForSeconds(hitDuration);
+
+        // set ishit to false after time passed
         isHit = false;
+
         spriteRenderer.color = Color.green;
     }
 

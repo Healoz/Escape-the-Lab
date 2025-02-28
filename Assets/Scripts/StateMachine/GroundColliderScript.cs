@@ -2,7 +2,14 @@ using UnityEngine;
 
 public class GroundColliderScript : MonoBehaviour
 {
-    public bool isGrounded { get; private set; }
+    [SerializeField]
+    private bool _isGrounded;
+
+    public bool isGrounded
+    {
+        get { return _isGrounded; }
+        private set { _isGrounded = value; }
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
