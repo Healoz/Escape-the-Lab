@@ -25,7 +25,7 @@ public class EvadeState : State
         //  end condition
         if (time > evadeTime)
         {
-            Debug.Log("evade done");
+            // Debug.Log("evade done");
             evadeLogic.isEvading = false; // only this script knows the state time elapsed
             // needs to be fixed, have a way for Player object to know if evade is done
             isComplete = true;

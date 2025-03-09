@@ -26,7 +26,7 @@ public class GroundColliderScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ground")
         {
-            Debug.Log("is Collided with ground");
+            // Debug.Log("is Collided with ground");
             isGrounded = true;
         }
     }
@@ -35,7 +35,7 @@ public class GroundColliderScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ground")
         {
-            Debug.Log("left ground");
+            // Debug.Log("left ground");
             isGrounded = false;
         }
     }

@@ -12,7 +12,7 @@ public class IdleState : State
         // end condition
         if (!groundColliderScript.isGrounded)
         {
-            Debug.Log("idle done");
+            // Debug.Log("idle done");
             isComplete = true;
         }
     }

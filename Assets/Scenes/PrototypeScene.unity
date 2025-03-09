@@ -5725,7 +5725,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 408773daeac64a345aae52e8dd5c7672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathLedgeDeteched: 0
+  isLeftLedge: 0
+  isRightLedge: 0
+  maxRaycastDistance: 200
+  maxGroundDistance: 3
   distanceFromLedgeCheck: 0.7
 --- !u!1 &1551042503
 GameObject:
@@ -6041,7 +6044,7 @@ GameObject:
   - component: {fileID: 1923218739}
   m_Layer: 0
   m_Name: OutOfBounds
-  m_TagString: Untagged
+  m_TagString: OutOfBounds
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

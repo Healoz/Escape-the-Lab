@@ -25,7 +25,7 @@ public class DetectionRadiusScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("trigger entered");
+            // Debug.Log("trigger entered");
             playerCurrentlyDetected = true;
             playerHasBeenDetected = true;
         }
@@ -36,7 +36,7 @@ public class DetectionRadiusScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("trigger exited");
+            // Debug.Log("trigger exited");
             playerCurrentlyDetected = false;
         }
     }
