@@ -3,6 +3,8 @@ using UnityEngine;
 public class EvadeLogic : MonoBehaviour
 {
     public bool isEvading;
+    public GroundColliderScript groundColliderScript;
+    public bool isGrounded => groundColliderScript.isGrounded;
     public float evadeCooldownTime;
     public float evadeMaxCooldownTime;
     public int evadeCharges;
@@ -36,18 +38,22 @@ public class EvadeLogic : MonoBehaviour
             return;
         }
 
-        if (currentRechargeTime < rechargeTime)
-        { // charge mechanic, seperate to cooldown time. stops from being able to constantly evade
-            currentRechargeTime += Time.deltaTime;
-        }
-        else
+        if (isGrounded) // only recharge once on ground
         {
-            currentRechargeTime = 0f;
+            if (currentRechargeTime < rechargeTime)
+            { // charge mechanic, seperate to cooldown time. stops from being able to constantly evade
+                currentRechargeTime += Time.deltaTime;
+            }
+            else
+            {
+                currentRechargeTime = 0f;
 
-            evadeCharges += 1; // once recharge time passes, add a charge
+                evadeCharges += 1; // once recharge time passes, add a charge
 
 
+            }
         }
+
     }
 
 }

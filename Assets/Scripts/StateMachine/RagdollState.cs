@@ -34,8 +34,8 @@ public class RagdollState : State
         // apply knockback force every frame
         rigidBody.linearVelocity = new Vector2(knockBackDirection.x * knockBackForce, upwardForce);
 
-
     }
+
     public override void Exit()
     {
         spriteRenderer.color = Color.yellow;

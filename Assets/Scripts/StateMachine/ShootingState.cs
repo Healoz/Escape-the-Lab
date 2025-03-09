@@ -33,6 +33,7 @@ public class ShootingState : State
     public override void Do()
     {
 
+        // setting child states
         GetDistanceFromTarget();
 
         if (distanceFromTarget < distanceToBackAway) // back away if player too close
