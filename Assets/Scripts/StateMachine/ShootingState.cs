@@ -15,6 +15,7 @@ public class ShootingState : State
     public float distanceFromTarget;
     public float distanceToBackAway;
     [Header("Movement Variables")]
+    public EdgeChecker edgeChecker;
     public float currentMoveTime;
     public float moveTime;
     public float[] moveTimeMinAndMax = new float[2];
@@ -50,18 +51,25 @@ public class ShootingState : State
 
     public void RandomMovementLogic()
     {
-        if (currentMoveTime >= moveTime) // if time has been reached
+        bool isOnLedge = edgeChecker.isLeftLedge || edgeChecker.isRightLedge;
+        // regardless of moveTime, if facing ledge, switch direction
+        // reset currentMoveTime
+        if (isOnLedge || currentMoveTime >= moveTime) // if about to walk off ledge or movement time complete
         {
-            currentMoveTime = 0f;
-            moveDirection = moveDirection * -1; // inverts the current move direction
-            rigidBody.linearVelocity = new Vector2(0, rigidBody.linearVelocity.y); // reset linear velocity
-            GetNewMoveTime();
-            return;
+            SwitchMoveDirection();
         }
 
         currentMoveTime += Time.deltaTime; // increment the time
         // if time hasnt been reached, keep moving in given direction
         rigidBody.linearVelocity = new Vector2(runForce * moveDirection, rigidBody.linearVelocity.y);
+    }
+
+    public void SwitchMoveDirection()
+    {
+        currentMoveTime = 0f;
+        moveDirection = moveDirection * -1; // inverts the current move direction
+        rigidBody.linearVelocity = new Vector2(0, rigidBody.linearVelocity.y); // reset linear velocity
+        GetNewMoveTime();
     }
 
     public void GetNewMoveTime()

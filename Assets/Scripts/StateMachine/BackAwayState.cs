@@ -4,6 +4,7 @@ public class BackAwayState : State
 {
     public GameObject threat;
     public float backAwayForce;
+    public EdgeChecker edgeChecker;
     public ShootIntervalScript shootIntervalScript;
     public ShootState shootState;
     public RetreatState retreatState;
@@ -16,12 +17,31 @@ public class BackAwayState : State
     }
     public override void Do()
     {
-        // back away logic - always happening
+        HandleMovement();
+        HandleShooting();
+
+    }
+
+    private void HandleMovement()
+    {
         float direction = GetBackAwayDirection();
+        bool atLedge = (direction == -1 && edgeChecker.isLeftLedge) ||
+                       (direction == 1 && edgeChecker.isRightLedge);
 
-        rigidBody.linearVelocity = new Vector2(backAwayForce * direction, rigidBody.linearVelocity.y);
+        if (atLedge)
+        {
+            // Stop moving if at ledge in direction of movement
+            rigidBody.linearVelocity = new Vector2(0, rigidBody.linearVelocity.y);
+        }
+        else
+        {
+            // Move away from target
+            rigidBody.linearVelocity = new Vector2(backAwayForce * direction, rigidBody.linearVelocity.y);
+        }
+    }
 
-
+    private void HandleShooting()
+    {
         // shooting logic
         // Only shoot if enough time has passed since last shot
         if (state != shootState && shootIntervalScript.currentShotTime >= shootIntervalScript.gracePeriodInterval)
@@ -35,7 +55,6 @@ public class BackAwayState : State
                 Set(retreatState);
             }
         }
-
     }
 
     public float GetBackAwayDirection()

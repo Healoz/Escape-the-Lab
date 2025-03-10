@@ -4,6 +4,7 @@ public class ChaseState : State
 {
     public GameObject threat;
     public float runForce;
+    public EdgeChecker edgeChecker;
 
     public override void Enter()
     {
@@ -11,10 +12,28 @@ public class ChaseState : State
 
 
     }
+
     public override void Do()
     {
-        // back away logic - always happening
+        // chase logic, always happening
         float direction = GetChaseDirection();
+
+        if (direction == -1) // if player in left direction
+        {
+            if (edgeChecker.isLeftLedge)
+            {
+                rigidBody.linearVelocity = new Vector2(0, rigidBody.linearVelocity.y); // enemy stops moving
+                return; // don't move if enemy is in direction of ledge
+            }
+        }
+        else if (direction == 1) // if player in right direction
+        {
+            if (edgeChecker.isRightLedge)
+            {
+                rigidBody.linearVelocity = new Vector2(0, rigidBody.linearVelocity.y); // enemy stops moving
+                return;
+            }
+        }
 
         rigidBody.linearVelocity = new Vector2(runForce * direction, rigidBody.linearVelocity.y);
 
