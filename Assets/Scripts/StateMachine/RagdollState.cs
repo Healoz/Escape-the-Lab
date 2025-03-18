@@ -41,6 +41,7 @@ public class RagdollState : State
         spriteRenderer.color = Color.yellow;
         rigidBody.linearVelocity = Vector2.zero;
         rigidBody.rotation = 0f; // Reset to upright position
+        rigidBody.freezeRotation = true; // freeze rotation
         rigidBody.angularVelocity = 0f; // Stop any spinning
     }
 }
